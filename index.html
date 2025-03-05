@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Equation Solver</title>
+</head>
+<body>
+    <h2>Enter Your Linear Equations</h2>
+
+    <!-- User Input: Text Area -->
+    <textarea id="equations" rows="5" cols="40" placeholder="Example: 2x+3y=6"></textarea>
+    <br>
+
+    <!-- Solve Button -->
+    <button onclick="solveEquations()">Solve</button>
+
+    <h3>Solution:</h3>
+
+    <!-- Result Display -->
+    <pre id="result"></pre>
+
+    <!-- JavaScript Code -->
+    <script>
+        function solveEquations() {
+            const equations = document.getElementById("equations").value.trim().split("\n");
+    
+            if (equations.length === 0 || equations[0] === "") {
+                document.getElementById("result").innerText = "Please enter equations.";
+                return;
+            }
+    
+            fetch("http://127.0.0.1:5000/solve", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ equations: equations })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("result").innerText = "Error: Unable to fetch results.";
+            });
+        }
+    </script>
+    
+</body>
+</html>
