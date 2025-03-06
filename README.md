@@ -1,1 +1,1 @@
-This is a bsic python implimentation which solves a given system of linear equations
+This is a basic python implimentation which solves a given system of linear equations
